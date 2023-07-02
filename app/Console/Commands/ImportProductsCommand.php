@@ -2,8 +2,10 @@
 
 namespace App\Console\Commands;
 
-use App\Http\Controllers\MailController;
 use App\Http\Controllers\OpenFoodController;
+use Illuminate\Support\Env;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AlertEmail;
 use App\Services\ProductsService;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Console\Command;
@@ -24,6 +26,7 @@ class ImportProductsCommand extends Command
 
     public function handle()
     {
+
         $startDate = Carbon::today()->startOfDay();
         $endDate = Carbon::today()->endOfDay();
         $importedProducts = ProductModel::whereBetween('imported_t', [$startDate, $endDate])->count();
@@ -31,8 +34,11 @@ class ImportProductsCommand extends Command
         if ($importedProducts === 0){
             Cache::delete('last_import_page');
         } elseif ($importedProducts >= Products::TOTAL_PRODUCTS) {
+            $data = 'Todos os 100 produtos do dia foram importados';
+            $mail = new AlertEmail($data);
+            $sentMessage = Mail::to('kaiquerocc@gmail.com')->send($mail);
+            return false;
 
-            return $this->info('Todos os 100 produtos do dia foram importados');
         }
 
         $productsPerMinute = Products::PRODUCTS_PER_MINUTES; // Quantidade inicial de produtos por minuto

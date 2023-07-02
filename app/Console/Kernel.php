@@ -16,7 +16,8 @@ class Kernel extends ConsoleKernel
     ];
     protected function schedule(Schedule $schedule): void
     {
-         $schedule->command('import:products')->everyThirtyMinutes();
+         $schedule->command('import:products')
+             ->dailyAt('04:00');
     }
 
     /**
