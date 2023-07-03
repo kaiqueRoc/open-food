@@ -35,12 +35,12 @@ class ProductModel extends Model
         $this->status = 'imported';
         $this->imported_t = Carbon::now();
         $this->url = $productData['url'];
-        $this->product_name = $productData['product_name'] ?? $productData['product_name_en'];
+        $this->product_name = isset($productData['product_name']) ? $productData['product_name'] : $productData['product_name_en'];
         $this->quantity = $productData['quantity'];
         $this->categories = $productData['categories'];
         $this->packaging = $productData['packaging'];
         $this->brands = $productData['brands'];
-        $this->image_url = $productData['image_url'] ?? null;
+        $this->image_url = isset($productData['image_url']) ? $productData['image_url'] : null;
         $this->save();
     }
 

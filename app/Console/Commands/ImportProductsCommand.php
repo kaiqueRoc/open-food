@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Http\Controllers\OpenFoodController;
+use App\Services\EmailService;
 use Illuminate\Support\Env;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AlertEmail;
@@ -26,19 +27,16 @@ class ImportProductsCommand extends Command
 
     public function handle()
     {
-
+        $totalProducts = new EmailService();
         $startDate = Carbon::today()->startOfDay();
         $endDate = Carbon::today()->endOfDay();
         $importedProducts = ProductModel::whereBetween('imported_t', [$startDate, $endDate])->count();
 
+
         if ($importedProducts === 0){
             Cache::delete('last_import_page');
         } elseif ($importedProducts >= Products::TOTAL_PRODUCTS) {
-            $data = 'Todos os 100 produtos do dia foram importados';
-            $mail = new AlertEmail($data);
-            $sentMessage = Mail::to('kaiquerocc@gmail.com')->send($mail);
-            return false;
-
+            return $totalProducts->alertImportProducts($importedProducts);
         }
 
         $productsPerMinute = Products::PRODUCTS_PER_MINUTES; // Quantidade inicial de produtos por minuto
@@ -51,17 +49,16 @@ class ImportProductsCommand extends Command
                 $response = $openFood->getProducts($productsPerMinute, $currentPage);
                 // Verifica se a requisição foi bem-sucedida
                 if (!isset($response['products'])) {
-                    $this->error('Produto não encontrado');
+                 $totalProducts->alertErroNotFoundProducts($response);
                 }
                 // Percorre os produtos obtidos
                 $importedProducts = ProductsService::saveProducts($response['products'], $importedProducts);
-                $this->info('Imported ' . $importedProducts . ' products from page ' . $currentPage);
+                $totalProducts->alertTotalImportProducts($importedProducts,$currentPage );
                 $currentPage++;
                 Cache::put('last_import_page', $currentPage, 1440);
 
             } catch (\Exception $e) {
-                $this->error('An error occurred: ' . $e->getMessage());
-                $this->info('Retrying after 60 seconds...');
+                $totalProducts->alertErroImportProducts($currentPage,  $e->getMessage());
                 sleep(60); // Atraso de 60 segundos
 
             }
