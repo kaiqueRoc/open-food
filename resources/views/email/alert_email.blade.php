@@ -5,6 +5,7 @@
     <title>Email de Alerta</title>
 </head>
     <body>
+
         <h1>Olá,</h1>
         <p>Este é um email de alerta.</p>
         <p>{{$data}}</p>
