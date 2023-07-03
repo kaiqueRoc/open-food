@@ -20,7 +20,7 @@ Neste desafio, trabalharemos no desenvolvimento de uma REST API para utilizar os
 ```
 ```bash
     # Crie um banco de dados MySQL para o projeto.
-    # Crie um arquivo .env na raiz do projeto e altere as variáveis abaixo:
+    # Crie um arquivo .env igual o .env.exemplo na raiz do projeto e altere as variáveis abaixo:
     
     DB_CONNECTION=mysql
     DB_HOST=seu_host
