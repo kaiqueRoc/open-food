@@ -12,11 +12,11 @@ Neste desafio, trabalharemos no desenvolvimento de uma REST API para utilizar os
 ### Instalação e uso do projeto
 ```bash
     # Clone o repositório para sua máquina local:
-    ❯  git clone https://github.com/kaiqueRoc/open-food-facts.git
+    >>>  git clone https://github.com/kaiqueRoc/open-food-facts.git
 ```
 ```bash
-    # Instale as dependências na raiz do projeto:
-    ❯ composer install
+    # Instale as dependências na raiz do projeto com o comando:
+    >>> composer install
 ```
 ```bash
     # Crie um banco de dados MySQL para o projeto.
@@ -33,12 +33,12 @@ Neste desafio, trabalharemos no desenvolvimento de uma REST API para utilizar os
 ```bash
     # Execute as migrações do banco de dados para criar as tabelas necessárias:
 
-    ❯ php artisan migrate
+    >>> php artisan migrate
 ```
 ```bash
-    # Inicie o servidor local:
+    # Inicie o servidor local com o comando:
+    >>> php artisan serve
 
-    ❯ php artisan serve    
     ❯ Agora você pode acessar a API em http://localhost:8000.
 
 ```
@@ -63,7 +63,7 @@ Neste desafio, trabalharemos no desenvolvimento de uma REST API para utilizar os
 -------------------------------------------------------------------------------------------------------
   ❯ Configurado um sistema de alerta para sync dos produtos via email.
   
-   # Par testar o envio do email deve configurar sua env.
+   # Para testar o envio do email deve configurar sua env.
    
     MAIL_DRIVER=smtp
     MAIL_HOST=smtp.exemplo.com
@@ -74,7 +74,11 @@ Neste desafio, trabalharemos no desenvolvimento de uma REST API para utilizar os
     MAIL_FROM_ADDRESS= "seu email"
     MAIL_FROM_NAME="seu nome"
     MAIL_ADM= email do adm para receber os alertas
-    
+
+   # Execute o comando:
+   
+  >>>  php artisan import:products
+
    # Nesse alerta será enviado o erro e qual pagina ocorreu.
    # O andamento da importação.
    # A conclusão da importação dos 100 produtos do dia.
@@ -85,7 +89,7 @@ Neste desafio, trabalharemos no desenvolvimento de uma REST API para utilizar os
   
   # Para a execução dos testes  o usuario deve estar na raiz do projeto e rodar o seguinte comando.
   
-  >> php artisan test
+  >>> php artisan test
  
  ❯ Neste teste será avaliado os demais funções.
   
