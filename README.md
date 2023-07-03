@@ -74,7 +74,7 @@ Neste desafio, trabalharemos no desenvolvimento de uma REST API para utilizar os
     MAIL_ENCRYPTION=tls
     MAIL_FROM_ADDRESS= "seu email"
     MAIL_FROM_NAME="seu nome"
-    MAIL_ADM= email do adm para receber os alertas
+    MAIL_ADM= email para receber os alertas
 
    # Execute o comando:
    
