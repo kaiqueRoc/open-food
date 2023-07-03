@@ -2,7 +2,9 @@
 
 ##   Introdução
 Neste desafio, trabalharemos no desenvolvimento de uma REST API para utilizar os dados do projeto Open Food Facts, que é um banco de dados aberto com informação nutricional de diversos produtos alimentícios. O objetivo do projeto é dar suporte à equipe de nutricionistas da empresa Fitness Foods LC, permitindo que eles revisem de maneira rápida a informação nutricional dos alimentos que os usuários publicam pela aplicação móvel.
-❯ Link da apresentação  https://www.loom.com/embed/0eae779324ef449abce50c3f9ae7c4de
+
+-----------------------------------------
+##### > Link da apresentação:  https://www.loom.com/embed/0eae779324ef449abce50c3f9ae7c4de
 -----------------------------------------
 ###  Tecnologias utilizadas
     Linguagem: PHP
