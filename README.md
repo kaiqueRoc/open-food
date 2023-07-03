@@ -1,4 +1,4 @@
-# Backend Challenge - Open Food Facts REST API
+# Backend Challenge 20220626 - Open Food Facts REST API
 
 ##   Introdução
 Neste desafio, trabalharemos no desenvolvimento de uma REST API para utilizar os dados do projeto Open Food Facts, que é um banco de dados aberto com informação nutricional de diversos produtos alimentícios. O objetivo do projeto é dar suporte à equipe de nutricionistas da empresa Fitness Foods LC, permitindo que eles revisem de maneira rápida a informação nutricional dos alimentos que os usuários publicam pela aplicação móvel.
