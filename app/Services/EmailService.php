@@ -23,13 +23,11 @@ class EmailService
     {
         $data = 'Ocorreu erro na importação da pagina ' . $page;
         if(isset($error)){
-            $this->error('Erro na importação ' . $error);
-            $this->info('Nova tentativa em 60 segundos');
+            $errorImport = 'Ocorreu erro na importação ' . $error;
+            Mail::send(new AlertEmail($errorImport));
         }
 
         return Mail::send(new AlertEmail($data));
-
-
     }
     public function alertErroNotFoundProducts($responde)
     {

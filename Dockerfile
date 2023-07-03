@@ -1,31 +1,32 @@
-# Use uma imagem base do PHP com Apache
-FROM php:7.4-apache
+# Use a imagem base do PHP 8.1 com Alpine Linux
+FROM php:8.1-alpine
 
-# Defina o diretório de trabalho
+# Atualize o repositório de pacotes e instale as dependências necessárias
+RUN apk update && apk upgrade \
+    && apk add --no-cache \
+        bash \
+        git \
+        curl \
+        libzip-dev \
+        oniguruma-dev \
+        unzip \
+    && docker-php-ext-install \
+        pdo_mysql \
+        zip \
+        mbstring \
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Defina o diretório de trabalho como o diretório de código do aplicativo
 WORKDIR /var/www/html
 
-# Copie os arquivos do seu projeto para o diretório de trabalho
+# Copie os arquivos do aplicativo para o contêiner
 COPY . .
 
-# Instale as dependências do Laravel usando o Composer
-RUN apt-get update && apt-get install -y \
-    libzip-dev \
-    unzip \
-    && docker-php-ext-install zip pdo_mysql \
-    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
-    && composer install --optimize-autoloader --no-dev
+# Execute os comandos necessários para instalar dependências do Composer, se necessário
+RUN composer install --no-scripts --no-autoloader
 
-# Copie o arquivo de configuração do Apache para o diretório correto
-COPY apache.conf /etc/apache2/sites-available/000-default.conf
-
-# Habilite o módulo rewrite do Apache
-RUN a2enmod rewrite
-
-# Defina as permissões corretas para os arquivos do Laravel
-RUN chown -R www-data:www-data storage bootstrap/cache
-
-# Expõe a porta 80 do servidor Apache
+# Exponha a porta se necessário
 EXPOSE 80
 
-# Inicie o servidor Apache
-CMD ["apache2-foreground"]
+# Defina o comando de inicialização do contêiner
+CMD ["php", "-S", "0.0.0.0:80", "-t", "/var/www/html/public"]

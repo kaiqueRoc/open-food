@@ -1,0 +1,17 @@
+# Use a imagem base do MySQL
+FROM mysql:latest
+
+# Define as variáveis de ambiente para a configuração do MySQL
+ENV MYSQL_ROOT_PASSWORD=open_food
+ENV MYSQL_DATABASE=open_food
+ENV MYSQL_USER=open_food
+ENV MYSQL_PASSWORD=open_food
+
+# Copie o arquivo SQL de inicialização para a pasta de inicialização do MySQL
+COPY ./createSchema.sql /docker-entrypoint-initdb.d/
+
+# Exponha a porta padrão do MySQL
+EXPOSE 3306
+
+# Execute o comando para iniciar o servidor MySQL quando o contêiner for iniciado
+CMD ["mysqld"]

@@ -16,10 +16,7 @@ Neste desafio, trabalharemos no desenvolvimento de uma REST API para utilizar os
     # Clone o repositório para sua máquina local:
     >>>  git clone https://github.com/kaiqueRoc/open-food-facts.git
 ```
-```bash
-    # Instale as dependências na raiz do projeto com o comando:
-    >>> composer install
-```
+
 ```bash
     # Crie um banco de dados MySQL para o projeto.
     # Crie um arquivo .env igual o .env.exemplo na raiz do projeto e altere as variáveis abaixo:
@@ -31,18 +28,31 @@ Neste desafio, trabalharemos no desenvolvimento de uma REST API para utilizar os
     DB_USERNAME=seu_usuario
     DB_PASSWORD=sua_senha
 ```
-
+```bash
+    # Gere a imagem docker do php com o comando:
+    >>> docker build -t open_food .
+    # Gere a imagem docker do mysql com o comando:
+    >>> docker build -t mysql_open_food -f DockerfileMySql .
+    # Crie uma rede docker para comunicação dos containers:
+    >>> docker network create rede_open_food
+    #execulte os containers:
+    >>> docker run -d --name open_food -v {'diretorio_do_projeto_local'}:/var/www/html --network rede_open_food -p 80:80 open_food
+    >>> docker run -d --name mysql_open_food --network rede_open_food -p 3306:3306 mysql_open_food
+```
+```bash
+    #  Acesso o container  e Instale as dependências na raiz do projeto com o comando:
+    >>> docker exec -ti open_food bash
+    >>> composer install
+    >>> php artisan migrate
+```
 ```bash
     # Execute as migrações do banco de dados para criar as tabelas necessárias:
 
     >>> php artisan migrate
 ```
 ```bash
-    # Inicie o servidor local com o comando:
-
-    >>> php artisan serve
-
-    ❯ Agora você pode acessar a API em http://localhost:8000.
+    # Seu servidor está configurado:
+    ❯ Acesse http://localhost.
 
 ```
 --------------------------------------------------------
@@ -50,7 +60,7 @@ Neste desafio, trabalharemos no desenvolvimento de uma REST API para utilizar os
 
 ```bash
 
-  ❯ GET /: Retorna um Status: 200 e uma Mensagem "Fullstack Challenge 20201026"
+  ❯ GET /: Retorna um Status: 200 e README com a documentação.
 
   ❯ GET /products/:code: Obtém informações de um id do  produto específico.
 
@@ -61,12 +71,15 @@ Neste desafio, trabalharemos no desenvolvimento de uma REST API para utilizar os
 
 ```bash
 
-  ❯ Configurado Docker no Projeto para facilitar o Deploy da equipe de DevOps.
+  ❯ Está Configurado 2 DockerFiles para facilitar deploy dos projetos.
+  
+   - Dockerfile > Projeto PHP
+   - DockerfileMySql > Servidor SQl
   
 -------------------------------------------------------------------------------------------------------
   ❯ Configurado um sistema de alerta para sync dos produtos via email.
   
-   # Para testar o envio do email deve configurar sua env.
+   # Para testar o envio do email deve configurar sua env antes de fazer imagem do docker.
    
     MAIL_DRIVER=smtp
     MAIL_HOST=smtp.exemplo.com
@@ -78,11 +91,11 @@ Neste desafio, trabalharemos no desenvolvimento de uma REST API para utilizar os
     MAIL_FROM_NAME="seu nome"
     MAIL_ADM= email para receber os alertas
 
-   # Execute o comando:
+   # Execute o comando dentro do container:
    
   >>>  php artisan import:products
 
-   # Nesse alerta será enviado o erro e qual pagina ocorreu.
+   # Nesse alerta será enviado o erro caso ocorra e qual pagina ocorreu.
    # O andamento da importação.
    # A conclusão da importação dos 100 produtos do dia.
 -------------------------------------------------------------------------------------------------------
@@ -90,7 +103,7 @@ Neste desafio, trabalharemos no desenvolvimento de uma REST API para utilizar os
 -------------------------------------------------------------------------------------------------------
   ❯ Foi Implementados testes unitários para os endpoints da API.  
   
-  # Para a execução dos testes  o usuario deve estar na raiz do projeto e rodar o seguinte comando.
+  # Para a execução dos testes  o usuario deve estar na raiz do container do projeto e rodar o seguinte comando.
   
   >>> php artisan test
  
