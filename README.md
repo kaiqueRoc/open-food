@@ -37,6 +37,7 @@ Neste desafio, trabalharemos no desenvolvimento de uma REST API para utilizar os
 ```
 ```bash
     # Inicie o servidor local com o comando:
+
     >>> php artisan serve
 
     ❯ Agora você pode acessar a API em http://localhost:8000.
