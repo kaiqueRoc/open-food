@@ -38,7 +38,7 @@ Neste desafio, trabalharemos no desenvolvimento de uma REST API para utilizar os
 ```bash
     # Inicie o servidor local:
 
-    ❯ php -S localhost:8000 -t public    
+    ❯ php artisan serve    
     ❯ Agora você pode acessar a API em http://localhost:8000.
 
 ```
@@ -59,14 +59,48 @@ Neste desafio, trabalharemos no desenvolvimento de uma REST API para utilizar os
 ```bash
 
   ❯ Configurado Docker no Projeto para facilitar o Deploy da equipe de DevOps.
-
-  ❯ Configurado um sistema de alerta caso ocorra falhas durante o Sync dos produtos.
-
-  ❯ Documentação da API utilizando o conceito de Open API 3.0.
   
-  # Foi Implementados testes unitários para os endpoints da API. Basta rodar o seguinte comando na raiz do projeto:
+-------------------------------------------------------------------------------------------------------
+  ❯ Configurado um sistema de alerta para sync dos produtos via email.
   
-  ❯  vendor/bin/phpunit
+   # Par testar o envio do email deve configurar sua env.
+   
+    MAIL_DRIVER=smtp
+    MAIL_HOST=smtp.exemplo.com
+    MAIL_PORT=587
+    MAIL_USERNAME= "seu email"
+    MAIL_PASSWORD= "sua senha"
+    MAIL_ENCRYPTION=tls
+    MAIL_FROM_ADDRESS= "seu email"
+    MAIL_FROM_NAME="seu nome"
+    MAIL_ADM= email do adm para receber os alertas
+    
+   # Nesse alerta será enviado o erro e qual pagina ocorreu.
+   # O andamento da importação.
+   # A conclusão da importação dos 100 produtos do dia.
+-------------------------------------------------------------------------------------------------------
+  ❯ Esta utilizado o conceito de Open API 3.0.
+-------------------------------------------------------------------------------------------------------
+  ❯ Foi Implementados testes unitários para os endpoints da API.  
+  
+  # Para a execução dos testes  o usuario deve estar na raiz do projeto e rodar o seguinte comando.
+  
+  >> php artisan test
+ 
+ ❯ Neste teste será avaliado os demais funções.
+  
+    ✓ import products   
+    ✓ root endpoint                                                                                                                                                                                                                0.05s  
+    ✓ get product by code                                                                                                                                                                                                          0.04s  
+    ✓ list all products    
+  -------------------------------------------------------------------------------------------------------
+ ❯ Resultado dos testes unitarios:
+ 
+  Tests:    4 passed (202 assertions)
+  Duration: 180.47s
+  -------------------------------------------------------------------------------------------------------
+
+ 
 
 
 ```
